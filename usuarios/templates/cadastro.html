@@ -13,7 +13,7 @@
     <div class="container">        
         <div class="row">
             <div class="col-md-3" style="text-align: center">
-                <img src="{% static 'geral/img/logo.png' %}" alt="">
+                <img style="width: 60%;" src="{% static 'geral/img/logo.png' %}" alt="">
                 <h3>VitaLab</h3>
             </div>
             
@@ -59,6 +59,9 @@
         <br>
         <input type="submit" class="btn-default" value="Cadastrar">
     </form>
+    <br>
+    <br>
+    <a href="{% url 'login' %}">Login</a>
     <br>
     <br>
     {% if messages %}

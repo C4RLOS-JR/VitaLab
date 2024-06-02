@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.messages import constants
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 def cadastro(request):
 
@@ -44,3 +45,20 @@ def cadastro(request):
 
     messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
     return redirect('/usuarios/cadastro')
+
+def logar(request):
+  if request.method == 'GET':
+    return render(request, 'login.html')
+  elif request.method == 'POST':
+    username = request.POST.get('username')
+    senha = request.POST.get('senha')
+
+    usuario_existe = authenticate(username=username, password=senha)
+
+    if usuario_existe:
+      login(request, usuario_existe)
+      return redirect('/')
+    else:
+      messages.add_message(request, constants.ERROR, 'Usuário ou senha inválido!')
+      return redirect('/usuarios/login')
+
