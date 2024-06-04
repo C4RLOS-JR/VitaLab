@@ -2,42 +2,38 @@
 {% load static %}
 
 {% block 'head' %}
-
-    <link href="{% static 'usuarios/css/css.css' %}" rel="stylesheet">
-
+  <link href="{% static 'usuarios/css/css.css' %}" rel="stylesheet" />
 {% endblock 'head' %}
 
-
-
 {% block 'conteudo' %}
-    <div class="container">
+  <div class="container">
+    <h3 class="font-destaque-secundaria">
+      <img width="10%" src="{% static 'geral/img/logo.png' %}" alt="" />Logar-se
+    </h3>
 
-        <h3 class="font-destaque-secundaria"> <img width="10%" src="{% static 'geral/img/logo.png' %}" alt="">Logar-se</h3>
-
-        <div>
-            <form action="{% url 'login' %}" method="POST">{% csrf_token %}
-                <label>Username</label>
-                <br>
-                <input type="text" class="input-default" name="username">
-                <br>
-                <br>
-                <label>Senha</label>
-                <br>
-                <input type="password" class="input-default" name="senha">
-                <br>
-                <br>
-                <input type="submit" class="btn-default" value="Logar">
-            </form>
-            <br>
-            <a href="{% url 'cadastro' %}">Cadastre-se</a>
-        </div>
-
-        {% if messages %}
-            <br>
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-
+    <div>
+      <form action="{% url 'login' %}" method="POST">{% csrf_token %}
+        <label>Username</label>
+        <br />
+        <input type="text" class="input-default" name="username" />
+        <br />
+        <br />
+        <label>Senha</label>
+        <br />
+        <input type="password" class="input-default" name="senha" />
+        <br />
+        <br />
+        <input type="submit" class="btn-default" value="Logar" />
+      </form>
+      <br />
+      <a href="{% url 'cadastro' %}">Cadastre-se</a>
     </div>
+
+    {% if messages %}
+      <br />
+      {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
 {% endblock %}
