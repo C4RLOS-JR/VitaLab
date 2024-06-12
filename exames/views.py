@@ -71,3 +71,11 @@ def cancelar_pedido(request, pedido_id):
     messages.add_message(request, constants.ERROR, 'Esse pedido não é seu!')
 
   return redirect('/exames/gerenciar_pedidos')
+
+@login_required
+def gerenciar_exames(request):
+  solicitacao_exames = SolicitacaoExames.objects.filter(usuario=request.user)
+
+  return render(request, 'gerenciar_exames.html', {
+    'solicitacao_exames': solicitacao_exames,
+  })
