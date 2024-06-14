@@ -31,7 +31,11 @@
                 <div class="col-md"><h4>{{exames.exame.nome}}</h4></div>
                 <div class="col-md">{{exames.badge_template}}</div>
                 <div class="col-md">
-                  <a href="#" class="btn btn-sm btn-light {% if exames.status == 'E' %}disabled{% endif %}">Resultado</a>
+                  {% if exames.status == 'F' %}
+                    <a href="{{exames.resultado.url}}" class="btn btn-sm btn-light">Resultado</a>
+                  {% else %}
+                    <a href="#" class="btn btn-sm btn-light disabled">Resultado</a>
+                  {% endif %}
                 </div>
               </div>
             {% endif %}
@@ -49,11 +53,15 @@
                 <div class="col-md"><h4>{{exames.exame.nome}}</h4></div>
                 <div class="col-md">{{exames.badge_template}}</div>
                 <div class="col-md">
-                  <a href="{% url %}" class="btn btn-sm btn-light {% if exames.status == 'E' %}disabled{% endif %}">Resultado</a>
+                  {% if exames.status == 'F' %}
+                    <a href="{{exames.resultado.url}}" class="btn btn-sm btn-light">Resultado</a>
+                  {% else %}
+                    <a href="#" class="btn btn-sm btn-light disabled">Resultado</a>
+                  {% endif %}
                 </div>
               </div>
             {% endif %}
-          {% endfor %}  
+          {% endfor %}
         </div>
     </div>
 
