@@ -25,14 +25,14 @@
           <h3>Exames de sangue</h3>
           <hr>
           <br>
-          {% for exames in solicitacao_exames %}
-            {% if exames.exame.tipo == 'S' %}
+          {% for exame in solicitacao_exames %}
+            {% if exame.exame.tipo == 'S' %}
               <div class="row">
-                <div class="col-md"><h4>{{exames.exame.nome}}</h4></div>
-                <div class="col-md">{{exames.badge_template}}</div>
+                <div class="col-md"><h4>{{exame.exame.nome}}</h4></div>
+                <div class="col-md">{{exame.badge_template}}</div>
                 <div class="col-md">
-                  {% if exames.status == 'F' %}
-                    <a href="{{exames.resultado.url}}" class="btn btn-sm btn-light">Resultado</a>
+                  {% if exame.status == 'F' %}
+                    <a href="{% url 'resultado_exame' exame.id %}" class="btn btn-sm btn-light">Resultado</a>
                   {% else %}
                     <a href="#" class="btn btn-sm btn-light disabled">Resultado</a>
                   {% endif %}
@@ -47,14 +47,14 @@
           <h3>Exames de imagem</h3>
           <hr>
           <br>
-          {% for exames in solicitacao_exames %}
-            {% if exames.exame.tipo == 'I' %}
+          {% for exame in solicitacao_exames %}
+            {% if exame.exame.tipo == 'I' %}
               <div class="row">
-                <div class="col-md"><h4>{{exames.exame.nome}}</h4></div>
-                <div class="col-md">{{exames.badge_template}}</div>
+                <div class="col-md"><h4>{{exame.exame.nome}}</h4></div>
+                <div class="col-md">{{exame.badge_template}}</div>
                 <div class="col-md">
-                  {% if exames.status == 'F' %}
-                    <a href="{{exames.resultado.url}}" class="btn btn-sm btn-light">Resultado</a>
+                  {% if exame.status == 'F' %}
+                    <a href="{% url 'resultado_exame' exame.id %}" class="btn btn-sm btn-light">Resultado</a>
                   {% else %}
                     <a href="#" class="btn btn-sm btn-light disabled">Resultado</a>
                   {% endif %}

@@ -79,3 +79,30 @@ def gerenciar_exames(request):
   return render(request, 'gerenciar_exames.html', {
     'solicitacao_exames': solicitacao_exames,
   })
+
+@login_required
+def resultado_exame(request, exame_id):
+  exame = SolicitacaoExames.objects.get(id=exame_id)
+
+  if not exame.resultado:
+    messages.add_message(request, constants.ERROR, 'O resultado ainda não está disponível!...Tente novamente mais tarde.')
+    return redirect('/exames/gerenciar_exames')
+  if not exame.requer_senha:
+    return redirect(exame.resultado.url)
+  
+  return redirect(f'/exames/solicitar_senha_exame/{exame_id}')
+
+@login_required
+def solicitar_senha_exame(request, exame_id):
+  exame = SolicitacaoExames.objects.get(id=exame_id)
+
+  if request.method == 'GET':
+    return render(request, 'solicitar_senha_exame.html', {'exame': exame})
+  elif request.method == 'POST':
+    senha = request.POST.get('senha')
+    
+    if senha != exame.senha:
+      messages.add_message(request, constants.ERROR, 'Senha inválida!')
+      return redirect(f'/exames/solicitar_senha_exame/{exame_id}')
+    
+    return redirect(exame.resultado.url)
