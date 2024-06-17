@@ -1,3 +1,5 @@
+from ast import mod
+from secrets import token_urlsafe
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
@@ -53,3 +55,22 @@ class PedidosExames(models.Model):
 
   def __str__(self):
     return f'{self.usuario} | {self.data}'
+  
+
+class AcessoMedico(models.Model):
+  usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+  identificacao = models.CharField(max_length=50)
+  tempo_de_acesso = models.IntegerField() # Em horas
+  criado_em = models.DateTimeField()
+  data_exames_iniciais = models.DateField()
+  data_exames_finais = models.DateField()
+  token = models.CharField(max_length=20, null=True, blank=True)
+
+  def __str__(self):
+    return self.token
+  
+  def save(self, *args, **kwargs):
+    if not self.token:
+      self.token = token_urlsafe(6)
+
+    super(AcessoMedico, self).save(*args, **kwargs)
