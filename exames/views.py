@@ -111,7 +111,6 @@ def solicitar_senha_exame(request, exame_id):
 def gerar_acesso_medico(request):
   if request.method == 'GET':
     acessos_medicos = AcessoMedico.objects.filter(usuario=request.user)
-
     return render(request, 'gerar_acesso_medico.html', {'acessos_medicos': acessos_medicos})
   elif request.method == 'POST':
     identificacao = request.POST.get('identificacao')
@@ -131,3 +130,14 @@ def gerar_acesso_medico(request):
     messages.add_message(request, constants.SUCCESS, 'Acesso médico gerado com sucesso!')
 
     return redirect('/exames/gerar_acesso_medico')
+  
+def acesso_medico(request, token):
+  acesso_medico = AcessoMedico.objects.get(token=token)
+
+  if acesso_medico.status == 'Expirado':
+    messages.add_message(request, constants.ERROR, 'Esse token já expirou, favor gerar outro token!')
+    return redirect('/exames/gerar_acesso_medico')
+  
+  pedidos = PedidosExames.objects.filter(usuario=acesso_medico.usuario).filter(data__gte=acesso_medico.data_exames_iniciais).filter(data__lte=acesso_medico.data_exames_finais)
+
+  return HttpResponse(pedidos)

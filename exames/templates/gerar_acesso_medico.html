@@ -61,8 +61,8 @@
               {% for acesso_medico in acessos_medicos %}
                 <tr class="linha-tabela">
                   <td>{{acesso_medico.id}}</td>
-                  <td>Status 1</td>
-                  <td>URL AQUI</td>
+                  <td>{{acesso_medico.status}}</td>
+                  <td><a href="{{acesso_medico.url}}">{{acesso_medico.url}}</a></td>
                 </tr>
               {% endfor %}
           </table>
