@@ -23,9 +23,9 @@
             <td>{{exame.exame.nome}}</td>
             <td>
               {% if exame.resultado %}
-                <a href="{% url 'resultado_exame' exame.id %}" class="btn btn-sm btn-light">Resultado</a>
+                <a href="{{exame.resultado.url}}" class="btn btn-sm btn-light">Resultado</a>
               {% else %}
-                Em analise
+                Em análise
               {% endif %}
             </td>
           </tr>
