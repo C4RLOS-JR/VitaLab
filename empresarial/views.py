@@ -1,7 +1,7 @@
 from asyncio import constants
 from django.shortcuts import redirect, render
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.contrib.auth.models import User
@@ -29,4 +29,15 @@ def cliente(request, cliente_id):
   exames = SolicitacaoExames.objects.filter(usuario=cliente)
 
   return render(request, 'cliente.html', {'cliente': cliente,'exames': exames})
-    
+
+@staff_member_required
+def exame_cliente(request, exame_id):
+  exame = SolicitacaoExames.objects.get(id=exame_id)
+
+  return render(request, 'exame_cliente.html', {'exame': exame})
+
+def proxy_pdf(request, exame_id):
+  exame = SolicitacaoExames.objects.get(id=exame_id)
+  resultado = exame.resultado.open()
+
+  return HttpResponse(resultado)
