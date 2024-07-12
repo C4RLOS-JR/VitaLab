@@ -42,6 +42,13 @@ def proxy_pdf(request, exame_id):
 
   return HttpResponse(resultado)
 
+def excluir_pdf(request, exame_id):
+  exame = SolicitacaoExames.objects.get(id=exame_id)
+  exame.resultado.delete()
+  exame.save()
+
+  return redirect(f'/empresarial/exame_cliente/{exame_id}')
+
 def gerar_senha(request, exame_id):
   exame = SolicitacaoExames.objects.get(id=exame_id)
 
